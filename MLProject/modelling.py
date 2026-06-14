@@ -34,8 +34,9 @@ def train_model():
     # Train-test split
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    # Configure MLflow
-    mlflow.set_tracking_uri("http://127.0.0.1:5000")
+    # Configure MLflow (use local mlruns folder in GitHub CI, use localhost:5000 on student machine)
+    if os.environ.get("CI") != "true":
+        mlflow.set_tracking_uri("http://127.0.0.1:5000")
     mlflow.set_experiment("House_Price_Prediction")
     
     # Enable autologging
