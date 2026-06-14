@@ -37,7 +37,10 @@ def train_model():
     # Configure MLflow (use local mlruns folder in GitHub CI, use localhost:5000 on student machine)
     if os.environ.get("CI") != "true":
         mlflow.set_tracking_uri("http://127.0.0.1:5000")
-    mlflow.set_experiment("House_Price_Prediction")
+        
+    # Only set experiment if not running inside an MLflow Project run
+    if "MLFLOW_RUN_ID" not in os.environ:
+        mlflow.set_experiment("House_Price_Prediction")
     
     # Enable autologging
     mlflow.sklearn.autolog()
