@@ -1,0 +1,13 @@
+name: house_prices_mlflow
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.13
+  - pip
+  - pip:
+      - pandas
+      - numpy
+      - scikit-learn
+      - mlflow==2.19.0
+      - joblib

@@ -1,0 +1,27 @@
+name: MLflow Training CI
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: |
+          pip install pandas numpy scikit-learn mlflow==2.19.0 joblib
+
+      - name: Run MLflow Project
+        run: |
+          mlflow run MLProject --no-conda
