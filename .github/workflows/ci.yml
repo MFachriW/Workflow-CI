@@ -36,13 +36,14 @@ jobs:
           python -c "
           import mlflow
           client = mlflow.tracking.MlflowClient()
-          experiment = client.get_experiment_by_name('House_Price_Prediction')
-          if experiment:
-              runs = client.search_runs(experiment_ids=[experiment.experiment_id])
+          experiments = client.search_experiments()
+          found = False
+          for exp in experiments:
+              runs = client.search_runs(experiment_ids=[exp.experiment_id])
               if runs:
                   print(f'LATEST_RUN_ID={runs[0].info.run_id}')
-              else:
-                  print('No runs found in experiment.')
-          else:
-              print('Experiment House_Price_Prediction not found.')
+                  found = True
+                  break
+          if not found:
+              print('No runs found in any experiment.')
           "
